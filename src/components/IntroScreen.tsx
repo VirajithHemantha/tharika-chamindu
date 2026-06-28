@@ -91,12 +91,11 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
             >
               <button
                 onClick={handleStart}
-                disabled={!videoReady}
-                className="group relative inline-flex items-center justify-center px-10 py-4 sm:px-12 sm:py-5 bg-gradient-to-r from-brand-beige-deep via-brand-gold to-brand-beige-deep bg-[length:200%_auto] rounded-full shadow-[0_10px_30px_rgba(176,137,104,0.4)] overflow-hidden transition-all duration-500 hover:bg-[right_center] hover:scale-105 hover:shadow-[0_15px_40px_rgba(176,137,104,0.5)] active:scale-95 disabled:opacity-70 disabled:hover:scale-100 cursor-pointer touch-manipulation"
+                className="group relative inline-flex items-center justify-center px-10 py-4 sm:px-12 sm:py-5 bg-gradient-to-r from-brand-beige-deep via-brand-gold to-brand-beige-deep bg-[length:200%_auto] rounded-full shadow-[0_10px_30px_rgba(176,137,104,0.4)] overflow-hidden transition-all duration-500 hover:bg-[right_center] hover:scale-105 hover:shadow-[0_15px_40px_rgba(176,137,104,0.5)] active:scale-95 cursor-pointer touch-manipulation"
               >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <span className="relative text-white uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[11px] sm:text-xs font-bold drop-shadow-sm transition-transform duration-300 group-hover:scale-[1.02]">
-                  {videoReady ? 'View Invitation' : 'Loading...'}
+                  View Invitation
                 </span>
               </button>
             </motion.div>
