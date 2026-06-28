@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, Loader2, Heart, Sparkles } from 'lucide-react';
 
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzimplvkLr-fexM8aS7Hc8WvOtFm3qdd_JnZM200xMBBFNQKWD3vyi3NPlBmH6TnEcd/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx6DB6a0H3a9peZb4jNDV8S9VEQW0xTBW5S94qj5TxtMh33SmIULfcJ73iAYnNtn_QoKw/exec";
 
 export const RSVPForm: React.FC = () => {
   const [formData, setFormData] = useState({
