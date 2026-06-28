@@ -53,7 +53,7 @@ export default function App() {
         ref={audioRef} 
         src="/You're Still The One - Shania Twain (Piano Cover).mp3" 
         loop 
-        preload="auto" 
+        preload="none" 
       />
       
       {!showInvitation ? (
@@ -62,7 +62,7 @@ export default function App() {
           onEnter={() => setShowInvitation(true)} 
         />
       ) : (
-        <div className="font-sans text-stone-800 bg-brand-ivory overflow-hidden selection:bg-brand-beige-deep/20">
+        <div className="font-sans text-stone-800 bg-brand-ivory overflow-x-hidden selection:bg-brand-beige-deep/20">
           <Toaster position="top-center" />
           
           {/* Premium Floating Music Toggle */}
@@ -71,7 +71,11 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 1, duration: 1 }}
             onClick={toggleMusic}
-            className="fixed top-6 right-6 z-50 w-12 sm:w-14 h-12 sm:h-14 bg-white/70 backdrop-blur-md rounded-full shadow-[0_8px_30px_rgba(176,137,104,0.15)] flex items-center justify-center border border-brand-beige/50 text-brand-beige-deep hover:scale-105 transition-all duration-300"
+            className="fixed z-50 w-12 sm:w-14 h-12 sm:h-14 bg-white/70 backdrop-blur-md rounded-full shadow-[0_8px_30px_rgba(176,137,104,0.15)] flex items-center justify-center border border-brand-beige/50 text-brand-beige-deep hover:scale-105 transition-all duration-300"
+            style={{
+              top: 'max(1.5rem, env(safe-area-inset-top))',
+              right: 'max(1.5rem, env(safe-area-inset-right))',
+            }}
           >
             {isMusicPlaying ? <Music className="w-5 h-5 sm:w-6 sm:h-6" /> : <VolumeX className="w-5 h-5 sm:w-6 sm:h-6" />}
           </motion.button>

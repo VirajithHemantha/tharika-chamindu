@@ -1,51 +1,58 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Sparkles, Heart } from 'lucide-react';
 import { FloatingPetals } from './FloatingPetals';
+import { isTouchDevice, prefersReducedMotion } from '../utils/mobile';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 1000], [0, 400]);
   const scale = useTransform(scrollY, [0, 800], [1, 1.1]);
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
 
-  return (
-    <div ref={containerRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-brand-ivory/50">
+  useEffect(() => {
+    setReduceMotion(prefersReducedMotion() || isTouchDevice());
+  }, []);
 
-      {/* Background Image with Parallax & Elegant Overlay */}
+  return (
+    <div
+      ref={containerRef}
+      className="relative min-h-[100dvh] h-[100dvh] flex items-center justify-center overflow-hidden bg-brand-ivory/50"
+    >
       <motion.div
         className="absolute inset-0 z-0 origin-center"
-        style={{ y: y1, scale }}
+        style={reduceMotion ? undefined : { y: y1, scale }}
       >
         <img
           src="/DSC04464 copy.jpg.jpeg"
           alt="Tharika and Chamindu"
           className="w-full h-full object-cover opacity-90"
           style={{ objectPosition: 'center 20%' }}
+          decoding="async"
+          fetchPriority="high"
         />
-        {/* Soft elegant gradient overlays to ensure text readability & premium feel */}
         <div className="absolute inset-0 bg-gradient-to-t from-brand-ivory via-brand-ivory/30 to-brand-ivory/50" />
         <div className="absolute inset-0 bg-gradient-to-b from-brand-beige/15 via-transparent to-brand-beige/10 mix-blend-overlay" />
       </motion.div>
 
-      {/* Persistent subtle falling petals in background */}
-      <div className="absolute inset-0 z-[5] opacity-60">
-        <FloatingPetals />
-      </div>
+      {!reduceMotion && (
+        <div className="absolute inset-0 z-[5] opacity-60">
+          <FloatingPetals />
+        </div>
+      )}
 
-      {/* Main Content */}
       <motion.div
         className="relative z-10 text-center px-4 sm:px-6 w-full max-w-6xl mt-10 sm:mt-20"
-        style={{ opacity }}
+        style={reduceMotion ? undefined : { opacity }}
       >
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.8 }}
+          transition={{ duration: reduceMotion ? 0.3 : 1.5, ease: [0.22, 1, 0.36, 1], delay: reduceMotion ? 0 : 0.8 }}
           className="flex flex-col items-center"
         >
-          {/* Subtle top decoration */}
           <div className="flex items-center gap-3 mb-6 sm:mb-8">
             <div className="h-[1px] w-12 sm:w-16 bg-gradient-to-l from-brand-beige-deep/60 to-transparent" />
             <Heart className="w-5 h-5 text-brand-beige-deep/70 fill-brand-beige/20" />
@@ -57,8 +64,7 @@ export const Hero: React.FC = () => {
           </span>
 
           <div className="relative mb-8 sm:mb-12 w-full flex justify-center">
-            {/* Soft glow behind text for contrast and magical feel */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[140%] bg-white/40 blur-[50px] sm:blur-[80px] rounded-full pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[140%] bg-white/40 blur-[30px] sm:blur-[80px] rounded-full pointer-events-none" />
             <h1 className="relative text-6xl sm:text-[7rem] lg:text-[9.5rem] font-display text-stone-800 leading-[1.1] sm:leading-[0.9] drop-shadow-sm">
               Tharika <br className="sm:hidden" />
               <span className="text-brand-beige-deep italic font-light mx-2 sm:mx-6 text-5xl sm:text-[6rem] lg:text-[8rem] inline-block -translate-y-2 sm:-translate-y-6">&</span>
@@ -75,10 +81,9 @@ export const Hero: React.FC = () => {
             <div className="hidden sm:block h-[1px] w-20 bg-gradient-to-l from-transparent to-brand-beige-deep/40" />
           </div>
 
-          {/* Enhanced Date pill with premium glass effect */}
           <div className="inline-block relative group mt-4 sm:mt-8 w-full sm:w-auto px-4 sm:px-0">
             <div className="absolute -inset-1 bg-gradient-to-r from-brand-beige-deep/40 via-brand-gold/40 to-brand-beige-deep/40 rounded-full blur-[8px] opacity-70 group-hover:opacity-100 transition duration-1000 group-hover:duration-300 transform group-hover:scale-105" />
-            <div className="relative px-4 sm:px-12 py-3 sm:py-5 bg-white/70 backdrop-blur-lg border border-brand-beige/50 rounded-full shadow-[0_8px_30px_rgba(176,137,104,0.15)] overflow-hidden whitespace-nowrap flex items-center justify-center">
+            <div className="relative px-4 sm:px-12 py-3 sm:py-5 bg-white/80 backdrop-blur-lg border border-brand-beige/50 rounded-full shadow-[0_8px_30px_rgba(176,137,104,0.15)] overflow-hidden whitespace-nowrap flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-b from-white/60 to-transparent pointer-events-none" />
               <span className="relative text-[16px] sm:text-3xl font-serif text-brand-beige-deep tracking-[0.2em] sm:tracking-[0.4em] font-medium drop-shadow-sm flex items-center gap-2 sm:gap-3 whitespace-nowrap">
                 <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-brand-gold flex-shrink-0" />
@@ -106,12 +111,11 @@ export const Hero: React.FC = () => {
         <div className="w-[1px] h-24 bg-gradient-to-t from-transparent to-brand-beige-deep/50" />
       </div>
 
-      {/* Refined Scroll Indicator */}
       <motion.div
         className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 cursor-pointer"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 2.5, duration: 1 }}
+        transition={{ delay: reduceMotion ? 0 : 2.5, duration: 1 }}
         whileHover={{ scale: 1.1 }}
       >
         <span className="text-[9px] sm:text-[10px] font-sans uppercase tracking-[0.4em] text-stone-500 font-semibold drop-shadow-md">Discover</span>

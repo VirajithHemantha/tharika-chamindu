@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
+import { isTouchDevice, prefersReducedMotion } from '../utils/mobile';
 
 interface Petal {
   id: number;
@@ -16,8 +17,13 @@ export const FloatingPetals: React.FC = () => {
   const [petals, setPetals] = useState<Petal[]>([]);
 
   useEffect(() => {
+    if (prefersReducedMotion()) {
+      return;
+    }
+
     const colors = ['#d4b896', '#e6d5b8', '#c9a96e', '#f5ebe0'];
-    const newPetals = Array.from({ length: 30 }).map((_, i) => ({
+    const count = isTouchDevice() ? 8 : 20;
+    const newPetals = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * 100,
       size: Math.random() * 8 + 8,
@@ -30,12 +36,16 @@ export const FloatingPetals: React.FC = () => {
     setPetals(newPetals);
   }, []);
 
+  if (petals.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden z-40">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
       {petals.map((petal) => (
         <motion.div
           key={petal.id}
-          className="absolute"
+          className="absolute will-change-transform"
           style={{ color: petal.color }}
           initial={{
             x: `${petal.x}vw`,

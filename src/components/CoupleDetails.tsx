@@ -65,6 +65,8 @@ export const CoupleDetails: React.FC = () => {
               }}
               alt="Tharika and Chamindu"
               className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
             />
             {/* Elegant inner shadow & overlay */}
             <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.1)] pointer-events-none" />
