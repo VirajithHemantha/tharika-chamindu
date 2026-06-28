@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface IntroScreenProps {
   onEnter: () => void;
@@ -11,6 +11,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handlePlay = async () => {
+    if (isPlaying) return;
     setIsPlaying(true);
     onPlayVideo?.();
 
@@ -36,6 +37,11 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
     onEnter();
   };
 
+  useEffect(() => {
+    handlePlay();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-brand-ivory cursor-pointer"
@@ -46,6 +52,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
         ref={videoRef}
         muted={true}
         playsInline
+        autoPlay
         preload="metadata"
         onLoadedData={() => setVideoReady(true)}
         onEnded={handleVideoEnded}
