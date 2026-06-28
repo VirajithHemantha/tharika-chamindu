@@ -62,7 +62,7 @@ export default function App() {
           onEnter={() => setShowInvitation(true)} 
         />
       ) : (
-        <div className="font-sans text-stone-800 bg-brand-ivory overflow-x-hidden selection:bg-brand-beige-deep/20">
+        <div className="font-sans text-stone-800 bg-brand-ivory overflow-x-clip selection:bg-brand-beige-deep/20">
           <Toaster position="top-center" />
           
           {/* Premium Floating Music Toggle */}
