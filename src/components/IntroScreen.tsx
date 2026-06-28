@@ -21,16 +21,10 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
     }
 
     try {
-      video.muted = false;
+      video.muted = true;
       await video.play();
     } catch {
-      try {
-        video.muted = true;
-        await video.play();
-        video.muted = false;
-      } catch {
-        onEnter();
-      }
+      onEnter();
     }
   };
 
@@ -50,7 +44,7 @@ export const IntroScreen: React.FC<IntroScreenProps> = ({ onEnter, onPlayVideo }
     >
       <video
         ref={videoRef}
-        muted={false}
+        muted={true}
         playsInline
         preload="metadata"
         onLoadedData={() => setVideoReady(true)}
